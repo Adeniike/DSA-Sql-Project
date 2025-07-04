@@ -125,7 +125,7 @@ Result:
 |Office Supplies|Chris McAfee|28.550
 
 
-#### Insight and strategic guidance to KMS Leadership
+#### Insight and strategic guidance to KMS Management
  Bottom 10 Customers by Revenue
 This query reveals the customers who have contributed the least to KMS’s revenue across different product categories. These accounts represent untapped or underperforming opportunities.
 
@@ -221,13 +221,20 @@ Result:
 | Adam Hart         | Technology          | 5                 | 10,409.15          |
 | Adam Hart         | Furniture           | 5                 | 3,160.98           |
 
-
-
-
-
-
-
-
+####  Recommendation for KMS Management
+To maximize revenue and strengthen relationships with high-value customers, KMS should consider the following actions:
+1. 🎯 Focus on Customer-Specific Product Strategies
+- Tailor marketing and sales efforts around the preferred product categories of each top customer.
+- For example, promote new Technology offerings to Aaron Bergman and Adam Bellavance.
+- Offer exclusive Office Supplies bundles to Aaron Hawkins and Adam Hart.
+2. 🤝 Strengthen Loyalty Through Personalization
+- Assign dedicated account managers to top customers to provide personalized service and early access to new products.
+- Use purchase history to send targeted promotions, loyalty rewards, or volume-based discounts.
+3. 📈 Expand High-Performing Categories
+- Invest in expanding inventory and promotions in categories like Technology, Office Supplies, and Furniture, which are driving the most revenue from top clients.
+4. 📊 Monitor and Nurture Top Accounts
+- Create a dashboard to track sales trends and engagement levels of top customers monthly.
+- Identify any drop in activity early and re-engage with tailored offers or check-ins
 
 Q7 which small business customer had the highest sales?
 ```Sql
@@ -243,6 +250,14 @@ GROUP BY
 ORDER BY 
     Total_Sales DESC
 ```
+Result:
+
+| Customer_sales| Total_sales|
+|-|-
+|Dennis Kane	|75967.591|
+
+Insight
+Dennis Kane is identified as the small business customer with the highest sales, contributing 75,967.59 to KMS revenue.
 
 Q8 Which corporate customer placed the most number of orders in 2019-2012?
 ```Sql
@@ -259,6 +274,17 @@ GROUP BY
 ORDER BY 
     Total_Orders DESC;
 ```
+
+Result:
+
+| Customer_name| Total_orders|
+|-|-
+|Adam Hart	|18|
+
+Insight:
+
+Between 2009 and 2012, Adam Hart emerged as the most active Corporate Customer, placing a total of 18 orders. This consistent purchasing behavior highlights Adam Hart as a highly engaged and valuable client for KMS.
+
 Q9 Which consumer customer was the most profitable one?
 ```Sql
 SELECT TOP 1
@@ -273,6 +299,16 @@ GROUP BY
 ORDER BY 
     Total_Profit DESC;
 ```
+
+Result:
+| Customer_name| Total_orders|
+|-|-
+|Emily Phan	|34005.440|
+
+Insight
+
+Emily Phan stands out as the most profitable Consumer Customer for KMS, contributing a total profit of 4,005.440
+
 Q10 Which customer returend items, and what segment do they belong?
 ```Sql
 SELECT  * from dbo.Kms_Data
@@ -291,6 +327,52 @@ WHERE
     o.status = 'Returned'
 ```
 
+Result:
+
+This table shows few customers with high return activity, including their segment and the number of returned orders.
+
+| 👤 Customer Name      | 🏢 Segment      | 🔢 Orders_Returned | 🔁 Status   |
+|-----------------------|----------------|--------------------|-------------|
+| Tamara Dahlen         | Corporate      | 65                 | Returned    |
+| Jonathan Doherty      | Corporate      | 69                 | Returned    |
+| Jonathan Doherty      | Corporate      | 69                 | Returned    |
+| Michael Dominguez     | Home Office    | 134                | Returned    |
+| Anne Pryor            | Consumer       | 135                | Returned    |
+
+Insight:
+
+A significant number of customers 872 in total have returned items to KMS. These returns span across all customer segments, including Home Office, Corporate, Small Business, and Consumer. This pattern suggests that returns are a widespread occurrence rather than being isolated to a specific segment, potentially pointing to broader issues such as product quality, customer expectations, or fulfillment challenges that warrant further investigation.
+
+#### 📌 Recommendation: Reduce High Return Rates Among Key Customers
+
+The data reveals a high volume of returned orders from specific customers across multiple segments. To address this and improve operational efficiency, KMS should consider the following actions:
+
+#### 1. Investigate Root Causes of Returns
+
+- Analyze return reasons for customers like **Michael Dominguez** and **Anne Pryor**, who have over 130 returns each.
+- Identify patterns such as product defects, delivery issues, or mismatched expectations.
+
+#### 2. Improve Product Descriptions and Quality Control
+
+- Ensure product listings are accurate and detailed to reduce misunderstandings.
+- Strengthen quality assurance processes to minimize defective or misrepresented items.
+
+#### 3. Engage High-Return Customers Directly
+
+- Reach out to customers with frequent returns (e.g., **Jonathan Doherty**, **Tamara Dahlen**) to understand their experience.
+- Offer support or personalized solutions to rebuild trust and reduce future returns.
+
+#### 4. Monitor Return Trends by Segment
+
+- Track return rates by customer segment (Corporate, Home Office, Consumer).
+- Use this data to tailor return policies, improve service, and adjust inventory strategies.
+
+#### 5. Introduce Return Threshold Alerts
+
+- Set up internal alerts for customers with unusually high return activity.
+- Flag accounts for review and proactive engagement before profitability is impacted.
+
+
 Q 11 company appropriately spent shipping cost based on the Order Priority?
 ```Sql
 SELECT 
@@ -305,6 +387,27 @@ GROUP BY
 ORDER BY 
     Order_Priority, Ship_Mode Desc;
 ```
+
+Result:
+✈️ Shipping Method Performance by Priority Level
+
+| 🚦 Priority Level   | 🚚 Shipping Method | 📦 Order Count | 💰 Avg Shipping Cost |
+|---------------------|--------------------|----------------|----------------------|
+| Critical            | Regular Air        | 1,180          | 7.28                 |
+| Critical            | Express Air        | 200            | 8.71                 |
+| Critical            | Delivery Truck     | 228            | 47.30                |
+| High                | Regular Air        | 1,308          | 7.65                 |
+| High                | Express Air        | 212            | 6.86                 |
+| High                | Delivery Truck     | 248            | 45.19                |
+| Low                 | Regular Air        | 1,280          | 8.02                 |
+| Low                 | Express Air        | 190            | 8.17                 |
+| Low                 | Delivery Truck     | 250            | 44.53                |
+| Medium              | Regular Air        | 1,225          | 7.69                 |
+| Medium              | Express Air        | 201            | 8.13                 |
+| Medium              | Delivery Truck     | 205            | 46.15                |
+| Not Specified       | Regular Air        | 1,277          | 7.62                 |
+| Not Specified       | Express Air        | 180            | 8.17                 |
+| Not Specified       | Delivery Truck     | 215            | 43.67                |
 
 
 
