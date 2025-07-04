@@ -96,6 +96,17 @@ WHERE
     AND Province = 'Ontario'
 Group by Region;
 ```
+Result:
+
+🏙️ Region   | 💰 Total_Sales  |
+|-------------|--------------------|
+| Ontario     | 202,346.84         |
+
+Insight:
+
+The total sales of Appliances within the ontario province amount to 202,346,84
+
+
 Q4 Advise the management of kms what to do to increase the revenue from bottom 10 customers..
 Bottom 10 customer's revenue
 ```Sql
@@ -257,6 +268,7 @@ Result:
 |Dennis Kane	|75967.591|
 
 Insight
+
 Dennis Kane is identified as the small business customer with the highest sales, contributing 75,967.59 to KMS revenue.
 
 Q8 Which corporate customer placed the most number of orders in 2019-2012?
@@ -311,9 +323,6 @@ Emily Phan stands out as the most profitable Consumer Customer for KMS, contribu
 
 Q10 Which customer returend items, and what segment do they belong?
 ```Sql
-SELECT  * from dbo.Kms_Data
-select * from dbo.Order_Status
-
 SELECT 
     k.customer_name,
     k.Customer_Segment,
@@ -378,37 +387,106 @@ Q 11 company appropriately spent shipping cost based on the Order Priority?
 SELECT 
     Order_Priority,
     Ship_Mode,
-    COUNT(*) AS Order_Count,
-    AVG(Shipping_Cost) AS Avg_Shipping_Cost
+    sum(Shipping_Cost)  AS Total_shipping_cost_for_priority,
+    count(Order_ID) AS number_of_shipping_cost_for_priority_ship_mode
 FROM 
     Kms_Data
 GROUP BY 
     Order_Priority, Ship_Mode
 ORDER BY 
-    Order_Priority, Ship_Mode Desc;
+    Order_Priority, Total_shipping_cost_for_priority Desc;
 ```
 
 Result:
 ✈️ Shipping Method Performance by Priority Level
 
-| 🚦 Priority Level   | 🚚 Shipping Method | 📦 Order Count | 💰 Avg Shipping Cost |
-|---------------------|--------------------|----------------|----------------------|
-| Critical            | Regular Air        | 1,180          | 7.28                 |
-| Critical            | Express Air        | 200            | 8.71                 |
-| Critical            | Delivery Truck     | 228            | 47.30                |
-| High                | Regular Air        | 1,308          | 7.65                 |
-| High                | Express Air        | 212            | 6.86                 |
-| High                | Delivery Truck     | 248            | 45.19                |
-| Low                 | Regular Air        | 1,280          | 8.02                 |
-| Low                 | Express Air        | 190            | 8.17                 |
-| Low                 | Delivery Truck     | 250            | 44.53                |
-| Medium              | Regular Air        | 1,225          | 7.69                 |
-| Medium              | Express Air        | 201            | 8.13                 |
-| Medium              | Delivery Truck     | 205            | 46.15                |
-| Not Specified       | Regular Air        | 1,277          | 7.62                 |
-| Not Specified       | Express Air        | 180            | 8.17                 |
-| Not Specified       | Delivery Truck     | 215            | 43.67                |
+🚦Order_Priority   | 🚚 Ship_Mode| 💰 Total_shipping_cost_for_priority     | 📦 number_of_shipping_cost_for_priority_ship_mode |
+|---------------------|--------------------|-----------------------------|----------------|
+| Critical            | Delivery Truck     | 10,783.82                   | 228            |
+| Critical            | Regular Air        | 8,586.76                    | 1,180          |
+| Critical            | Express Air        | 1,742.10                    | 200            |
+| High                | Delivery Truck     | 11,206.88                   | 248            |
+| High                | Regular Air        | 10,005.01                   | 1,308          |
+| High                | Express Air        | 1,453.53                    | 212            |
+| Low                 | Delivery Truck     | 11,131.61                   | 250            |
+| Low                 | Regular Air        | 10,263.62                   | 1,280          |
+| Low                 | Express Air        | 1,551.63                    | 190            |
+| Medium              | Delivery Truck     | 9,461.62                    | 205            |
+| Medium              | Regular Air        | 9,418.72                    | 1,225          |
+| Medium              | Express Air        | 1,633.59                    | 201            |
+| Not Specified       | Regular Air        | 9,734.08                    | 1,277          |
+| Not Specified       | Delivery Truck     | 9,388.01                    | 215            |
+| Not Specified       | Express Air        | 1,470.06                    | 180            |
 
+
+Insight:
+
+The analysis reveals that KMS is not allocating shipping costs effectively in relation to order priority—particularly for time-sensitive orders.
+
+#### Key Observations:
+
+a. Misalignment for High and Critical Orders:
+
+Delivery Truck, identified as the slowest yet most economical shipping method, accounts for the highest total shipping cost for both Critical and High priority orders. This contradicts the urgency these priorities imply.
+
+Express Air, the fastest and most expensive option, has the lowest total shipping cost and lowest usage across all priority levels, including the most urgent ones. This underutilization suggests that speed is being sacrificed for cost, even when urgency is essential.
+
+b. Overreliance on Regular Air:
+
+Regular Air is used extensively across all priority levels, including Critical and High. While this may be acceptable for medium priorities, its dominance indicates that faster shipping methods like Express Air are not being leveraged where they are most needed.
+
+c. Appropriate Spend for Lower Priorities:
+
+For Low, Medium, and Not Specified priorities, the use of Delivery Truck and Regular Air is more justifiable. These methods align well with cost-saving goals for non-urgent shipments.
+
+#### Recommendation:
+KMS should re-evaluate its shipping strategy to ensure high-priority orders are aligned with faster delivery options like Express Air, even at a higher cost, to meet customer expectations and service standards.
+
+
+
+### 📌 Overall Strategic Recommendation for KMS Management
+
+Based on the analysis of customer value, shipping efficiency, return behavior, and regional sales, the following strategic actions are recommended to improve profitability, customer retention, and operational efficiency:
+
+#### 🎯 1. Deepen Engagement with High-Value Customers
+
+- Prioritize top customers like **Adam Hart**, **Aaron Bergman**, and **Aaron Hawkins** with:
+  - Dedicated account management
+  - Personalized product recommendations
+  - Loyalty incentives and early access to new offerings
+- Monitor their purchase trends to identify upsell and cross-sell opportunities.
+
+#### 🚚 2. Align Shipping Methods with Order Priority
+
+- **Critical and High priority orders** should rely more on **Express Air** and **Regular Air**, minimizing use of **Delivery Truck** due to its slower speed.
+- **Medium and Low priority orders** are appropriately using more economical methods like **Delivery Truck**.
+- Implement automated shipping logic to enforce alignment between urgency and delivery method.
+
+#### 🔁 3. Reduce High Return Rates
+
+- Investigate high-return customers such as **Michael Dominguez** and **Anne Pryor** to understand root causes.
+- Improve product descriptions, quality control, and post-purchase support.
+- Set up alerts for accounts with excessive returns to enable proactive engagement.
+
+#### 📦 4. Optimize Shipping Cost Efficiency
+
+- Delivery Truck, while economical per unit, contributes significantly to total shipping costs due to volume.
+- Regular Air offers a good balance of cost and speed—consider shifting more volume here for non-urgent orders.
+- Monitor average shipping cost per method and adjust logistics strategy accordingly.
+
+#### 🌍 5. Leverage Regional Sales Insights
+
+- **Ontario** is a high-performing region with ₦202,346.84 in total sales.
+- Focus marketing and distribution efforts in this region to maintain momentum and explore expansion opportunities.
+
+#### 📊 6. Build a Performance Dashboard
+
+- Create a real-time dashboard to track:
+  - Top customers and their product preferences
+  - Shipping method usage by priority
+  - Return rates by customer and segment
+  - Regional sales performance
+- Use this dashboard to support data-driven decision-making across departments.
 
 
 
