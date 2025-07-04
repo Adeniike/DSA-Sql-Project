@@ -34,6 +34,16 @@ GROUP BY
 ORDER BY  
     Total_Sales DESC;                  
 ```
+Result:
+| Product_Category | Total_Sales |
+| ---------------- | ----------- | 
+| Technology | 5984248.409
+
+Insight:
+
+Technology emerges as the top-selling product category, driving significant revenue for the business. This suggests a strong demand for tech-related products, potentially due to their innovative features, functionality, or relevance to customers' daily lives.
+
+
 Q2 what are the Top 3 region in terms of sales?
 ```Sql
 SELECT TOP 
@@ -43,6 +53,13 @@ GROUP BY Region
 ORDER BY 
     Total_Sales DESC;
 ```
+Result:
+| Region| Total_sales|
+|-|-|
+|West|	3597549.329|
+|Ontario|3063212.527
+|Prarie|2837304.650|
+
 ```Sql
 Q2b what are the Bottom 3 Region
 SELECT top  3 Region, SUM(Sales) AS Total_Sales
@@ -51,6 +68,13 @@ GROUP BY Region
 ORDER BY 
     Total_Sales ASC;
 ```
+Result:
+| Region| Total_sales|
+|-|-|
+|West|	3597549.329|
+|Ontario|3063212.527
+|Prarie|2837304.650|
+
  Q3 What were the total sales of appliances in ontairo?
 ```Sql
 SELECT Region, SUM(Sales) AS Total_Appliance_Sales_Ontario
