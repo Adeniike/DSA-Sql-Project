@@ -17,6 +17,7 @@ It includes key fields such as:
 -	Sales performance metrics
 -	Review counts and ratings
 -	Inventory levels
+ 
 
 #### Tools
 -	SQL (SQLServer) For Analysis
